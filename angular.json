@@ -122,8 +122,13 @@
               "devServerTarget": "calculate-mortgage:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {}
         }
       }
-    }},
+    }
+  },
   "defaultProject": "calculate-mortgage"
 }
