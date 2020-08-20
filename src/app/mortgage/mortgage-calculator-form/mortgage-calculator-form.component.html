@@ -1,0 +1,94 @@
+<!-- Form to enter the mortgage details to calculate the mortgage amount -->
+<section>
+    <div class="form-container">
+        <label class="form-label">Mortage Calculator Form</label>
+        <form [formGroup]="mortgageCalcForm" id="mortgageCalcForm" (ngSubmit)="calculateMortgage()" noValidate>
+            <div class="form-group">
+                <label for="brand">Enter mortgage amount</label>
+                <input type="number" class="form-control margin-left-10" id="mortgageAmt" aria-describedby="mortgageAmtHelp"
+                    placeholder="Enter mortgage amount" formControlName="mortgageAmt">
+            </div>
+            <div class="form-group">
+                <label for="title">Enter interest rate</label>
+                <div class="input-group">
+                    <input type="number" class="form-control margin-left-10" id="interestRate" aria-describedby="interestRateHelp"
+                        placeholder="Enter interest rate" formControlName="interestRate">
+                    <div class="input-group-append">
+                        <span class="input-group-text">%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="model">Enter amortization period</label>
+                <select class="form-control margin-left-10" id="amortizationPeriod" aria-describedby="amortizationPeriodHelp"
+                    formControlName="amortizationPeriod">
+                    <option disabled selected value="">Choose the amortization period</option>
+                    <option value="{{i+1}}" *ngFor="let item of arrayYears(30); let i = index">{{i + 1}}
+                        <span *ngIf="i === 0">Year</span>
+                        <span *ngIf="i !== 0">Years</span>
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="paymentFrequency">Enter payment frequency</label>
+                <select class="form-control margin-left-10" id="paymentFrequency" aria-describedby="paymentFrequencyHelp"
+                    formControlName="paymentFrequency">
+                    <option disabled selected value="">Choose the payment frequency</option>
+                    <option value="{{12}}">Monthly (12x per year)</option>
+                    <option value="{{24}}">Semi-monthly (24x per year)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="term">Enter payment frequency</label>
+                <select class="form-control margin-left-10" id="term" aria-describedby="termHelp" formControlName="term">
+                    <option disabled selected value="">Choose the term</option>
+                    <option value="{{i+1}}" *ngFor="let item of arrayYears(10); let i = index">{{i + 1}}
+                        <span *ngIf="i === 0">Year</span>
+                        <span *ngIf="i !== 0">Years</span>
+                    </option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" appMortgageFormula mortObjStr="{{mortgageCalcForm.value | json}}">Calculate</button>
+        </form>
+    </div>
+</section>
+
+<section class="margin-top-10">
+    <h3>Calculation Summary</h3>
+    <table class="table" *ngIf="formulaResults">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Category</th>
+            <th scope="col">Term</th>
+            <th scope="col">Amortization Period</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Number of Payments</th>
+            <td>{{formulaResults.termn}}</td>
+            <td>{{formulaResults.n}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Mortgage Payment</th>
+            <td>${{formulaResults.monthlyPayment | number:'0.2-2'}}</td>
+            <td>${{formulaResults.monthlyPayment | number:'0.2-2'}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Principal Payments</th>
+            <td>TBD</td>
+            <td>${{formulaResults.p | number:'0.2-2'}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Interest Payments</th>
+            <td>TBD</td>
+            <td>${{(formulaResults.n * formulaResults.monthlyPayment) - formulaResults.p | number:'0.2-2'}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Total Cost</th>
+            <td>${{formulaResults.termn * formulaResults.monthlyPayment | number:'0.2-2'}}</td>
+            <td>${{formulaResults.n * formulaResults.monthlyPayment | number:'0.2-2'}}</td>
+          </tr>
+        </tbody>
+      </table>
+</section>

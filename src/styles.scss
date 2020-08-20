@@ -1,1 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+.margin-left-10 {
+    margin-left: 10px;
+}
+
+section {
+    padding: 10px;
+}
+
+table {
+    border: 1px solid grey;
+}
+
+.form-container {
+    width: 800px;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid grey;
+}
+
+.form-label {
+    font-size: 1.2em;
+    font-weight: 700;
+    display: block;
+    text-align: center;
+    line-height: 150%;
+}
+
+.form-control, .input-group {
+    display: inline-block;
+    width: 50% !important;
+}
+
+.input-group-append {
+    display: inherit;
+}
